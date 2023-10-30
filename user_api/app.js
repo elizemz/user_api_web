@@ -7,9 +7,26 @@ const app = express();
 
 app.use(express.json());
 
+// api/users
 app.get("/api/users", (req, res) => {
   console.log("Get all users");
-  res.status(200).json({ message: "success" });
+  const { users } = JSON.parse(
+    fs.readFileSync("users.json", { encoding: "utf-8" })
+  );
+  res.status(200).json({ message: "success", users });
+});
+// api/users/1 or 2 | 4
+app.get("/api/users/:userId", (req, res) => {
+  console.log("Get an user by ID");
+  const { users } = JSON.parse(
+    fs.readFileSync("users.json", { encoding: "utf-8" })
+  );
+  const findUser = users.filter((user) => user.id === req.params.userId);
+  if (findUser.length === 0) {
+    res.status(400).json({ message: `${userId} тай хэрэглэгч олдсонгүй.` });
+  } else {
+    res.status(200).json({ message: "success", user: findUser[0] });
+  }
 });
 
 app.post("/api/users", (req, res) => {
@@ -30,7 +47,24 @@ app.post("/api/users", (req, res) => {
 
 app.put("/api/users/:userId", (req, res) => {
   console.log("Update user by id");
-  res.status(200).json({ message: "success" });
+  const { userId } = req.params;
+  const { users } = JSON.parse(
+    fs.readFileSync("users.json", { encoding: "utf-8" })
+  );
+  let index = users.findIndex((user) => user.id === userId);
+
+  if (index === -1) {
+    res.status(400).json({ message: `${userId} тай хэрэглэгч олдсонгүй.` });
+  } else {
+    users[index] = { ...users[index], ...req.body };
+    fs.writeFileSync("users.json", JSON.stringify({ users }), {
+      encoding: "utf-8",
+    });
+    res.status(200).json({
+      message: `${userId} тай хэрэглэгчийг шинэчиллээ.`,
+      user: users[index],
+    });
+  }
 });
 
 app.delete("/api/users/:userId", (req, res) => {

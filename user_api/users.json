@@ -1,11 +1,1 @@
-{
-  "users": [
-    {
-      "id": "c7c8ee52-8c2f-401e-b5ee-875b15e2a77f",
-      "name": "Naraa",
-      "status": "online",
-      "email": "naraa@email.mn",
-      "department": "technology"
-    }
-  ]
-}
+{"users":[{"id":"c7c8ee52-8c2f-401e-b5ee-875b15e2a77f","name":"Naraa","status":"offline","email":"naraa@email.mn","department":"technology"},{"id":"072a8545-e82b-4ef8-8f92-32359ed0110c","name":"Saraa","status":"online","email":"saraa@email.mn","department":"marketing"}]}
