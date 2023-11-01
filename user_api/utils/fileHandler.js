@@ -4,12 +4,16 @@ const path = require("path");
 const p = path.join(__dirname, "../data/");
 
 const readFile = (fileName) => {
-  const { data } = JSON.parse(
-    fs.readFileSync(p + fileName, {
-      encoding: "utf-8",
-    })
-  );
-  return data;
+  try {
+    const { data } = JSON.parse(
+      fs.readFileSync(p + fileName, {
+        encoding: "utf-8",
+      })
+    );
+    return data;
+  } catch (error) {
+    throw new Error("Aлдаа гарлаа"); // extends
+  }
 };
 
 const writeFile = (fileName, data) => {
